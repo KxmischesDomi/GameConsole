@@ -6,8 +6,8 @@ class PongGame : public  Game {
 
 private:
 	const float playerSpeed = 8.5;
-	const float botSpeed = 5.2;
-	const float ballSpeed = 8.5;
+	const float botSpeed = 2.5;
+	const float ballSpeed = 7;
 
 	int points;
 

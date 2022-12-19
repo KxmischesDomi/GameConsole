@@ -6,7 +6,7 @@
 Engine :: Engine() {
 	ledController.shutdown(0, false);
 
-	pinMode(buttonPin, INPUT);
+  	pinMode(buzzerPin, INPUT);
   	pinMode(buzzerPin, OUTPUT);
 
 	pinMode(buttonPin, INPUT);
@@ -22,8 +22,8 @@ void Engine :: updateLoop(float deltaTime) {
 
 	// Button input:
 	int buttonStateOld = buttonState;
-	buttonState = digitalRead(buttonPin);
-	buttonDown = buttonState == 0;
+	buttonState = !digitalRead(buttonPin);
+	buttonDown = buttonState == 1;
   	buttonDownThisFrame = buttonDown && buttonState != buttonStateOld;
   	buttonUpThisFrame = buttonState == 0 && buttonStateOld == 1;
 
@@ -36,14 +36,14 @@ void Engine :: updateLoop(float deltaTime) {
 
 	// Get analog stick input:
 	const float inputThreshold = 0.1;
-	inputX = remap(analogRead(xPin), 0, 1023, -1, 1);
+	inputX = remap(analogRead(xPin), 0, 1023, 1, -1);
 	inputY = -remap(analogRead(yPin), 0, 1023, -1, 1);
 
-	Serial.print("X: ");
+/* 	Serial.print("X: ");
 	Serial.print(inputX);
 	Serial.print(" Y: ");
 	Serial.print(inputY);
-	Serial.print("\n");
+	Serial.print("\n"); */
 
 	if (abs(inputX) < inputThreshold) {
 		inputX = 0;
@@ -54,8 +54,7 @@ void Engine :: updateLoop(float deltaTime) {
 }
 
 void Engine :: playSound(int frequency, int duration) {
-	
-	/* tone(buzzerPin, frequency, duration); */
+	tone(buzzerPin, frequency, duration);
 }
 
 void Engine :: clearScreen() {

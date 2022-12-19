@@ -5,14 +5,13 @@
 
 class Engine {
 private:
-
 	// Input pins:
 	const int buttonPin = 3;
-	const int xPin = 1;
-	const int yPin = 0;
+	const int xPin = 0;
+	const int yPin = 1;
 
 	// Audio pins:
-	const int buzzerPin = 11;
+	const int buzzerPin = 2;
 	
 	// Display pins:
 	const int dinPin = 13;
@@ -27,6 +26,11 @@ private:
 	float remap(float, float, float, float, float);
 
 public:
+	// Display properties:
+	static const int width = 8;
+	static const int height = 8;
+
+	// Timings:
 	float deltaTime;
 	unsigned long time;
 

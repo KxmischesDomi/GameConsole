@@ -27,13 +27,11 @@ private:
 	int foodX;
 	int foodY;
 
-	bool gameOver;
-	float scoreDisplayAmount;
-
 	void placeFood();
 	int sign(float);
 
 public:
 	SnakeGame();
 	virtual void updateLoop(Engine&);
+	virtual int getScore();
 };

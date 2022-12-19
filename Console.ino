@@ -1,10 +1,11 @@
 #include "Engine.h"
 #include "src/SnakeGame.h"
 #include "src/SpaceGame.h"
+#include "src/PongGame.h"
 #include "src/Game.h";
 
 const bool showStartupSequence = true;
-const int numGames = 2;
+const int numGames = 3;
 
 int activeGameIndex = 0;
 unsigned long timeOld;
@@ -14,7 +15,7 @@ Game* game = new SnakeGame();
 
 void setup() {
   Serial.begin(115200);
-  
+
   engine.setDisplayBrightness(4);
 
   if (showStartupSequence) {
@@ -50,26 +51,62 @@ void loop() {
 }
 
 void handleGames(float deltaTime) {
-  game->updateLoop(engine);
 
-  const float switchGameButtonHoldTime = 0.75;
-  if (engine.buttonDownDuration > switchGameButtonHoldTime) {
-    switchGame();
+  if (!game->gameOver) {
+    game->updateLoop(engine);
+  } else {
+		game->scoreDisplayAmount += engine.deltaTime * 10;
+		for (int i = 0; i < min(game->getScore(), (int)game->scoreDisplayAmount); i ++) {
+			int x = i % 8;
+			int y = i / 8;
+			engine.setPixel(x,y);
+		}
   }
+
+  if (engine.buttonUpThisFrame) {
+    const float switchGameButtonHoldTime = 0.75;
+    if (engine.buttonDownDuration > switchGameButtonHoldTime) {
+      // Next Game
+      nextGame();
+    } else if (game->gameOver) {
+      // Restart
+      switchGame(activeGameIndex);
+    }
+  }
+
 }
 
-void switchGame() {
+void nextGame() {
   activeGameIndex += 1;
   activeGameIndex %= numGames;
-  delete game;
-  
-  if (activeGameIndex == 0) {
-    game = new SnakeGame;
-  }
-  else if (activeGameIndex == 1) {
-    game = new SpaceGame;
-  }
+  switchGame(activeGameIndex);
+}
 
+void switchGame(int index) {
+  activeGameIndex = index;
+  delete game;
+
+  Serial.print("Switch Game: ");
+  Serial.println(activeGameIndex);
+
+  switch (activeGameIndex) {
+  case 0:
+    Serial.println("Switch to Snake");
+    game = new SnakeGame();
+    break;
+  case 1:
+    Serial.println("Switch to Space");
+    game = new SpaceGame();
+    break;
+  case 2:
+    Serial.println("Switch to Pong");
+    game = new PongGame();
+    break;
+  default:
+    Serial.println("Game Index Overflow!");
+    break;
+  }
+  
 }
 
 void startupSequence() {

@@ -15,22 +15,10 @@ SnakeGame::SnakeGame() {
 
 	timeRemainingToNextFoodSpawn = 1.5;
 	foodExists = false;
-	gameOver = false;
-	scoreDisplayAmount = -5;
 }
 
 void SnakeGame::updateLoop(Engine& engine) {
 	//Engine & engine = *ptrEngine;
-
-	if (gameOver) {
-		scoreDisplayAmount += engine.deltaTime * 10;
-		for (int i = 0; i < min(snakeLength, (int)scoreDisplayAmount); i ++) {
-			int x = i % 16;
-			int y = i / 16;
-			engine.setPixel(x,y);
-		}
-		return;
-	}
 	
 	timeSinceLastMove += engine.deltaTime;
 
@@ -138,8 +126,10 @@ void SnakeGame::updateLoop(Engine& engine) {
 		}
 	}
 
-	
-	
+}
+
+int SnakeGame::getScore() {
+	return snakeLength;
 }
 
 // Place food randomly on tile not currently occupied by snake

@@ -11,20 +11,10 @@ SpaceGame::SpaceGame() {
 	gameOver = false;
 	lastShootTime = 0;
 	numEnemiesDestroyed = 0;
-	scoreDisplayAmount = -5;
 }
 
 void SpaceGame::updateLoop(Engine& engine) {
 	
-	if (gameOver) {
-		scoreDisplayAmount += engine.deltaTime * 10;
-		for (int i = 0; i < min(numEnemiesDestroyed, (int)scoreDisplayAmount); i ++) {
-			int x = i % 16;
-			int y = i / 16;
-			engine.setPixel(x,y);
-		}
-		return;
-	}
 	elapsedTime += engine.deltaTime;
 
 	// Move player
@@ -126,4 +116,8 @@ void SpaceGame::updateLoop(Engine& engine) {
 		}
 	}
 
+}
+
+int SpaceGame::getScore() {
+	return numEnemiesDestroyed;
 }

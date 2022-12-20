@@ -2,16 +2,17 @@
 #include "src/SnakeGame.h"
 #include "src/SpaceGame.h"
 #include "src/PongGame.h"
+#include "src/FlappyBirdGame.h"
 #include "src/Game.h";
 
 const bool showStartupSequence = true;
-const int numGames = 3;
+const int numGames = 4;
 
 int activeGameIndex = 0;
 unsigned long timeOld;
 
 Engine engine = Engine();
-Game* game = new SnakeGame();
+Game* game = new FlappyBirdGame();
 
 void setup() {
   Serial.begin(115200);
@@ -101,7 +102,11 @@ void switchGame(int index) {
   case 2:
     Serial.println("Switch to Pong");
     game = new PongGame();
-    break;
+    break;  
+  case 3:
+    Serial.println("Switch to FlappyBird");
+    game = new FlappyBirdGame();
+    break;  
   default:
     Serial.println("Game Index Overflow!");
     break;

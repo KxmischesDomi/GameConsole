@@ -8,7 +8,6 @@ SpaceGame::SpaceGame() {
 	numEnemies = 0;
 	numBullets = 0;
 	elapsedTime = 0;
-	gameOver = false;
 	lastShootTime = 0;
 	numEnemiesDestroyed = 0;
 }
@@ -40,7 +39,7 @@ void SpaceGame::updateLoop(Engine& engine) {
 		lastShootTime = elapsedTime;
 		bullets[numBullets].x = playerPos.x + 1;
 		bullets[numBullets].y = playerPos.y;
-		numBullets ++;
+		numBullets++;
 		
 	}
 	

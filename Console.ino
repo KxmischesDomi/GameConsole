@@ -3,7 +3,7 @@
 #include "src/AstroidsGame.h"
 #include "src/PongGame.h"
 #include "src/FlappyBirdGame.h"
-#include "src/Game.h";
+#include "src/Game.h"
 
 const bool showStartupSequence = true;
 const int numGames = 4;

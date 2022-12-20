@@ -2,6 +2,8 @@
 #include <Arduino.h>
 #include <LedControl.h>
 
+#define WIDTH 8
+#define HEIGHT 8
 
 class Engine {
 private:
@@ -20,15 +22,15 @@ private:
 
 	LedControl ledController = LedControl(dinPin,clkPin,csPin, 1); // (DIN, CLK, CS, num displays
 
-	unsigned char rowsDisplay[8];
+	unsigned char rowsDisplay[WIDTH];
 	int buttonState;
 
 	float remap(float, float, float, float, float);
 
 public:
 	// Display properties:
-	static const int width = 8;
-	static const int height = 8;
+	static const int width = WIDTH;
+	static const int height = HEIGHT;
 
 	// Timings:
 	float deltaTime;

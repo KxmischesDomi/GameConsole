@@ -5,14 +5,12 @@
 class SnakeGame : public Game {
 
 private:
-	static const int width = 8;
-	static const int height = 8;
 	const float timeBetweenMoves = .2;
 	const int foodSpawnMillisMin = 400;
 	const int foodSpawnMillisMax = 2000;
 
-	unsigned char x[width * height];
-	unsigned char y[width * height];
+	unsigned char x[Engine::width * Engine::height];
+	unsigned char y[Engine::width * Engine::height];
 
 	int snakeLength;
 	float timeSinceLastMove;

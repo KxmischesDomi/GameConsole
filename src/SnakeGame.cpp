@@ -59,10 +59,10 @@ void SnakeGame::updateLoop(Engine& engine) {
 		int newHeadY = y[0] + dirY;
 
 		// Wrap around:
-		newHeadX = (newHeadX >= width) ? 0 : newHeadX;
-		newHeadX = (newHeadX < 0) ? width-1 : newHeadX;
-		newHeadY = (newHeadY >= height) ? 0 : newHeadY;
-		newHeadY = (newHeadY < 0) ? height-1 : newHeadY;
+		newHeadX = (newHeadX >= Engine::width) ? 0 : newHeadX;
+		newHeadX = (newHeadX < 0) ? Engine::width-1 : newHeadX;
+		newHeadY = (newHeadY >= Engine::height) ? 0 : newHeadY;
+		newHeadY = (newHeadY < 0) ? Engine::height-1 : newHeadY;
 
 
 		// Update snake points
@@ -96,7 +96,7 @@ void SnakeGame::updateLoop(Engine& engine) {
 				}
 				x[snakeLength] = x[snakeLength-1] + nextPointDirX;
 				y[snakeLength] = y[snakeLength-1] + nextPointDirY;
-				snakeLength ++;
+				snakeLength++;
 
 				// Play sound
 				if ((snakeLength-1)%5==0) {
@@ -134,13 +134,13 @@ int SnakeGame::getScore() {
 
 // Place food randomly on tile not currently occupied by snake
 void SnakeGame::placeFood() {
-	int numTiles = width * height;
+	int numTiles = Engine::width * Engine::height;
 	int randomIndex = random(0, numTiles);
 
 	// Create map of tiles occupied by snake
 	bool occupancyMap[numTiles] = {false};
 	for (int i = 0; i < snakeLength; i ++) {
-		int snakeIndex = y[i] * width + x[i];
+		int snakeIndex = y[i] * Engine::width + x[i];
 		occupancyMap[snakeIndex] = true;
 	}
 
@@ -152,8 +152,8 @@ void SnakeGame::placeFood() {
 		}
 		// Can spawn food here
 		else {
-			foodX = randomIndex % width;
-			foodY = randomIndex / width;
+			foodX = randomIndex % Engine::width;
+			foodY = randomIndex / Engine::width;
 			timeRemainingToNextFoodSpawn = random(foodSpawnMillisMin, foodSpawnMillisMax) / 1000.0;
 			foodExists = true;
 			return;

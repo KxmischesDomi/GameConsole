@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "../Engine.h"
 
-class SpaceGame : public Game {
+class AstroidsGame : public Game {
 	
 private:
 	// Difficulty settings:
@@ -27,7 +27,7 @@ private:
 	
 	
 public:
-	SpaceGame();
+	AstroidsGame();
 	virtual void updateLoop(Engine&);
 	virtual int getScore();
 };

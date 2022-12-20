@@ -16,7 +16,7 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
   elapsedTime += engine.deltaTime;
 
   // Player Input
-  if (engine.buttonDown) {
+  if (engine.buttonDownThisFrame) {
     birdVelocity = flapVelocity; 
     engine.playSound(400, 100);
   }
@@ -26,8 +26,8 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
   if (birdY < 0) {
     birdY = 0;
     birdVelocity = 0;
-  } else if (birdY > 7) {
-    birdY = 7;
+  } else if (birdY > Engine::height - 1) {
+    birdY = Engine::height - 1;
     birdVelocity = 0;
   }
   
@@ -48,8 +48,8 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
   timeSinceLastPipe += engine.deltaTime;
   if (timeSinceLastPipe > pipeSpacing) {
     timeSinceLastPipe = timeSinceLastPipe - pipeSpacing;
-    pipes[numPipes].x = 9;
-    pipes[numPipes].y = rand() % 6;
+    pipes[numPipes].x = Engine::width;
+    pipes[numPipes].y = rand() % Engine::height - pipeGap + 1;
     numPipes++;
   }
 
@@ -71,7 +71,7 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
 
   // Render the pipes
   for (int i = 0; i < numPipes; i++) {
-    for (int y = 0; y < 8; y++) {
+    for (int y = 0; y < Engine::height; y++) {
       if (y < pipes[i].y || y >= pipes[i].y + pipeGap) {
         engine.setPixel(pipes[i].x, y);
       }

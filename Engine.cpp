@@ -79,7 +79,7 @@ void Engine :: setPixel(int x, int y) {
 }
 
 void Engine :: setPixelToValue(int x, int y, bool on) {
-	if (x >= 8 || x < 0 || y >= 8 || y < 0) {
+	if (x >= width || x < 0 || y >= height || y < 0) {
 		return;
 	}
 		if (on) {

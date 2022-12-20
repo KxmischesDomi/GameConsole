@@ -1,7 +1,7 @@
-#include "SpaceGame.h"
+#include "AstroidsGame.h"
 #include "Arduino.h"
 
-SpaceGame::SpaceGame() {
+AstroidsGame::AstroidsGame() {
 	playerPos.x = 1;
 	playerPos.y = 4;
 	timeToNextEnemySpawn = 1;
@@ -12,7 +12,7 @@ SpaceGame::SpaceGame() {
 	numEnemiesDestroyed = 0;
 }
 
-void SpaceGame::updateLoop(Engine& engine) {
+void AstroidsGame::updateLoop(Engine& engine) {
 	
 	elapsedTime += engine.deltaTime;
 
@@ -48,7 +48,7 @@ void SpaceGame::updateLoop(Engine& engine) {
 		engine.setPixel((int)bullets[i].x, (int) bullets[i].y);
 		bullets[i].x += engine.deltaTime * 20;
 
-		bool destroyBullet = bullets[i].x >= 8;
+		bool destroyBullet = bullets[i].x >= Engine::width;
 
 		// Check for collision with enemies
 		for (int j = numEnemies-1; j >= 0; j --) {
@@ -117,6 +117,6 @@ void SpaceGame::updateLoop(Engine& engine) {
 
 }
 
-int SpaceGame::getScore() {
+int AstroidsGame::getScore() {
 	return numEnemiesDestroyed;
 }

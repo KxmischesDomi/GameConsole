@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "src/SnakeGame.h"
-#include "src/SpaceGame.h"
+#include "src/AstroidsGame.h"
 #include "src/PongGame.h"
 #include "src/FlappyBirdGame.h"
 #include "src/Game.h";
@@ -12,12 +12,12 @@ int activeGameIndex = 0;
 unsigned long timeOld;
 
 Engine engine = Engine();
-Game* game = new FlappyBirdGame();
+Game* game = new SnakeGame();
 
 void setup() {
   Serial.begin(115200);
 
-  engine.setDisplayBrightness(4);
+  engine.setDisplayBrightness(2);
 
   if (showStartupSequence) {
     startupSequence();
@@ -96,8 +96,8 @@ void switchGame(int index) {
     game = new SnakeGame();
     break;
   case 1:
-    Serial.println("Switch to Space");
-    game = new SpaceGame();
+    Serial.println("Switch to Astroids");
+    game = new AstroidsGame();
     break;
   case 2:
     Serial.println("Switch to Pong");
@@ -116,8 +116,8 @@ void switchGame(int index) {
 
 void startupSequence() {
   // Frame 1
-  for (int y = 0; y < 8; y ++) {
-    for (int x = 0; x < 8; x ++) {
+  for (int y = 0; y < Engine::height; y++) {
+    for (int x = 0; x < Engine::width; x++) {
       if (!(x <= y || x-8 >= y)) {
         engine.setPixel(x,y);
       }
@@ -128,8 +128,8 @@ void startupSequence() {
   delay(320);
 
   // Frame 2
-  for (int y = 0; y < 8; y ++) {
-    for (int x = 0; x < 8; x ++) {
+  for (int y = 0; y < Engine::height; y ++) {
+    for (int x = 0; x < Engine::width; x ++) {
       if (x <= y) {
         engine.setPixel(x,y);
       }
@@ -140,8 +140,8 @@ void startupSequence() {
   delay(320);
 
   // Frame 3
-  for (int y = 0; y < 8; y ++) {
-    for (int x = 0; x < 8; x ++) {
+  for (int y = 0; y < Engine::height; y ++) {
+    for (int x = 0; x < Engine::width; x ++) {
         engine.setPixel(x,y);
      }
    }
@@ -150,10 +150,10 @@ void startupSequence() {
   delay(700);
 
   // Transition out
-  for (int i = 0; i < 8; i ++) {
-    for (int x = 0; x < 8; x ++) {
-      for (int y = 0; y < 8; y ++) {
-        if ((x+(8-y) <= i || 8-x+y <= i)) {
+  for (int i = 0; i < Engine::width; i ++) {
+    for (int x = 0; x < Engine::width; x ++) {
+      for (int y = 0; y < Engine::height; y ++) {
+        if ((x+(Engine::height-y) <= i || Engine::width-x+y <= i)) {
           engine.setPixelToValue(x, y, false);
         }
       }

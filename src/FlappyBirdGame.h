@@ -7,9 +7,13 @@ class FlappyBirdGame : public Game {
 
   private:
     const float pipeSpeed = 3;
-    const float pipeSpacing = 2;
-    const int pipeGap = 3;
-    
+    const float pipeGap = 3;
+    const float startpipeSpacing = 2.5;
+    const float endPipeSpacing = 1.5;
+    const float timeForEndPipeSpacing = 60;
+
+    float elapsedTime;
+
     const float gravity = 9.8;
     const float flapVelocity = -5;
 

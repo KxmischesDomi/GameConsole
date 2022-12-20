@@ -9,9 +9,12 @@ FlappyBirdGame::FlappyBirdGame() {
   timeSinceLastPipe = 0;
   numPipes = 0;
   pipesSurvived = 0;
+  elapsedTime = 0;
 }
 
 void FlappyBirdGame::updateLoop(Engine& engine) {
+  elapsedTime += engine.deltaTime;
+
   // Player Input
   if (engine.buttonDown) {
     birdVelocity = flapVelocity; 
@@ -38,6 +41,9 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
       pipeSurvived[i] = false;
     }
   }
+
+  float pipeSpacingPercent = min(1, elapsedTime / timeForEndPipeSpacing);
+  float pipeSpacing = startpipeSpacing + (pipeSpacingPercent - 0)/(1-0) * (endPipeSpacing-startpipeSpacing);
 
   timeSinceLastPipe += engine.deltaTime;
   if (timeSinceLastPipe > pipeSpacing) {

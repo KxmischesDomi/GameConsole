@@ -12,10 +12,10 @@ class FlappyBirdGame : public Game {
     const float endPipeSpacing = 1.5;
     const float timeForEndPipeSpacing = 60;
 
-    float elapsedTime;
+    const float gravity = 15;
+    const float flapVelocity = -8;
 
-    const float gravity = 9.8;
-    const float flapVelocity = -5;
+    float elapsedTime;
 
     float birdX;
     float birdY;

@@ -49,7 +49,8 @@ void FlappyBirdGame::updateLoop(Engine& engine) {
   if (timeSinceLastPipe > pipeSpacing) {
     timeSinceLastPipe = timeSinceLastPipe - pipeSpacing;
     pipes[numPipes].x = Engine::width;
-    pipes[numPipes].y = rand() % Engine::height - pipeGap + 1;
+    int maxY = Engine::height - pipeGap + 1;
+    pipes[numPipes].y = rand() % maxY;
     numPipes++;
   }
 

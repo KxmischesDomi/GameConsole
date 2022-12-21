@@ -44,6 +44,7 @@ public:
 	bool buttonDownThisFrame;
 	float buttonDownDuration;
 
+
 	Engine();
 
 	void playSound(int frequency, int duration);

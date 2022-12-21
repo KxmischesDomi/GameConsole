@@ -1,9 +1,9 @@
 #include "Engine.h"
-#include "src/SnakeGame.h"
-#include "src/AstroidsGame.h"
-#include "src/PongGame.h"
-#include "src/FlappyBirdGame.h"
-#include "src/Game.h"
+#include "SnakeGame.h"
+#include "AstroidsGame.h"
+#include "PongGame.h"
+#include "FlappyBirdGame.h"
+#include "Game.h"
 
 const bool showStartupSequence = true;
 const int numGames = 4;

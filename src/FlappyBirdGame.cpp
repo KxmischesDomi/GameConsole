@@ -1,6 +1,6 @@
 #include "FlappyBirdGame.h"
 #include "Arduino.h"
-#include "../Engine.h"
+#include "Engine.h"
 
 FlappyBirdGame::FlappyBirdGame() {
   birdX = 2;

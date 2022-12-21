@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "Arduino.h"
 #include <LedControl.h>
-#include "src/Game.h"
+#include "Game.h"
 
 Engine :: Engine() {
 	ledController.shutdown(0, false);

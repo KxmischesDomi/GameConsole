@@ -1,6 +1,6 @@
 #include "SnakeGame.h"
 #include "Arduino.h"
-#include "../Engine.h"
+#include "Engine.h"
 
 SnakeGame::SnakeGame() {
 	snakeLength = 1;

@@ -53,25 +53,29 @@ void loop() {
 
 void handleGames(float deltaTime) {
 
-  if (!game->gameOver) {
-    game->updateLoop(engine);
-  } else {
-		game->scoreDisplayAmount += engine.deltaTime * 10;
-		for (int i = 0; i < min(game->getScore(), (int)game->scoreDisplayAmount); i ++) {
-			int x = i % 8;
-			int y = i / 8;
-			engine.setPixel(x,y);
-		}
-  }
-
-  if (engine.buttonUpThisFrame) {
+    if (engine.buttonUpThisFrame) {
     const float switchGameButtonHoldTime = 0.75;
     if (engine.buttonDownDuration > switchGameButtonHoldTime) {
       // Next Game
       nextGame();
-    } else if (game->gameOver) {
-      // Restart
-      switchGame(activeGameIndex);
+    }
+  }
+
+  if (!game->gameOver) {
+    game->updateLoop(engine);
+  } else {
+    if (game->scoreDisplayAmount <= game->getScore()) {
+      if (engine.buttonUpThisFrame) {
+        // Restart
+        switchGame(activeGameIndex);
+      }
+    } else {
+      game->scoreDisplayAmount += engine.deltaTime * 10;
+    }
+    for (int i = 0; i < min(game->getScore(), (int)game->scoreDisplayAmount); i++) {
+       int x = i % 8;
+       int y = i / 8;
+       engine.setPixel(x,y);
     }
   }
 

@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "src/SnakeGame.h"
+#include "src/MainMenu.h"
 #include "src/AstroidsGame.h"
 #include "src/PongGame.h"
 #include "src/FlappyBirdGame.h"
@@ -8,11 +9,12 @@
 const bool showStartupSequence = true;
 const int numGames = 4;
 
-int activeGameIndex = 0;
 unsigned long timeOld;
 
 Engine engine = Engine();
+
 Game* game = new SnakeGame();
+int activeGameIndex = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -60,11 +62,10 @@ void handleGames(float deltaTime) {
       nextGame();
     }
   }
-
   if (!game->gameOver) {
     game->updateLoop(engine);
   } else {
-    if (game->scoreDisplayAmount <= game->getScore()) {
+    if (game->scoreDisplayAmount >= game->getScore()) {
       if (engine.buttonUpThisFrame) {
         // Restart
         switchGame(activeGameIndex);

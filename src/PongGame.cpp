@@ -5,13 +5,13 @@
 PongGame::PongGame() {
     points = 0;
 
-    player1Y = 3;
-    player2Y = 3;
+    player1Y = Engine::height / 2 - 1;
+    player2Y = Engine::height / 2 - 1;
 
     ballVelX = 1;
     ballVelY = 0;
-    ballX = 4;
-    ballY = 3;
+    ballX = Engine::width / 2;
+    ballY = Engine::height / 2 - 1;
 }
 
 void PongGame::updateLoop(Engine& engine) {
@@ -45,11 +45,10 @@ void PongGame::updateLoop(Engine& engine) {
     // Check for goals
     if (ballX >= Engine::width) {
         // Point for the player
-        ballX = 4;
-        ballY = 3;
+        ballX = Engine::width / 2;
+        ballY = Engine::height / 2 - 1;
         ballVelY = 0;
         ballVelX = 1;
-        player2Y = 3;
         points++;
         engine.playSound(230,450);
         return;
@@ -62,24 +61,24 @@ void PongGame::updateLoop(Engine& engine) {
         bool onGround = false;
         // Check for top / bottom collissions
         if (ballY >= Engine::height - 1 || ballY <= 1) {
-            ballVelY *= -1;
+            ballVelY = -ballVelY;
             onGround = true;
         }
 
         // Check player collissions
-        if (ballX >= Engine::width - 1) {
+        if (ballX >= Engine::width - 1 && ballVelX > 0) {
             if ((int) ballY >= (int) player2Y && (int) ballY <= (int) player2Y + 1) {
                 ballX = Engine::width - 2;
-                float newDirectionFromHit = (int) player2Y == (int) ballY ? -1 : 1;
-                ballVelY = ballVelY == 0 && !onGround ? newDirectionFromHit : newDirectionFromHit == -ballVelY ? 0 : newDirectionFromHit;
+                ballVelY = (int) player1Y == (int) ballY ? -ballYVelocity : ballYVelocity;
+                if ((int) ballY == 0 || (int) ballY == Engine::height - 1) ballVelY = -ballVelY;
                 ballVelX *= -1;
                 engine.playSound(360, 150);
             }
-        } else if (ballX <= 1) {
+        } else if (ballX <= 1 && ballVelX < 0) {
             if ((int) ballY >= (int) player1Y && (int) ballY <= (int) player1Y + 1) {
                 ballX = 1;
-                float newDirectionFromHit = (int) player1Y == (int) ballY ? -1 : 1;
-                ballVelY = ballVelY == 0 && !onGround ? newDirectionFromHit : newDirectionFromHit == -ballVelY ? 0 : newDirectionFromHit;
+                ballVelY = (int) player1Y == (int) ballY ? -ballYVelocity : ballYVelocity;
+                if ((int) ballY == 0 || (int) ballY == Engine::height - 1) ballVelY = -ballVelY;
                 ballVelX *= -1;
                 engine.playSound(349, 150);
             }
@@ -88,7 +87,7 @@ void PongGame::updateLoop(Engine& engine) {
     
     // Draw players
     drawPlayer(engine, 0, player1Y);
-    drawPlayer(engine, 7, player2Y);
+    drawPlayer(engine, Engine::width - 1, player2Y);
 
     // Draw Ball
     engine.setPixel(ballX, ballY);

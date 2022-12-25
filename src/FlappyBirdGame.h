@@ -23,8 +23,8 @@ class FlappyBirdGame : public Game {
     float timeSinceLastPipe;
 
     int numPipes;
-    Vector2 pipes[5] = {};
-    bool pipeSurvived[5] = {};
+    Vector2 pipes[NUM_VERTICAL_DISPLAYS * 4] = {};
+    bool pipeSurvived[NUM_VERTICAL_DISPLAYS * 4] = {};
 
     int pipesSurvived;
 

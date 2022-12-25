@@ -152,7 +152,7 @@ void SnakeGame::placeFood() {
 		}
 		// Can spawn food here
 		else {
-			foodX = randomIndex % Engine::width;
+			foodX = randomIndex / Engine::height;
 			foodY = randomIndex / Engine::width;
 			timeRemainingToNextFoodSpawn = random(foodSpawnMillisMin, foodSpawnMillisMax) / 1000.0;
 			foodExists = true;

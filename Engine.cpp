@@ -4,7 +4,9 @@
 #include "src/Game.h"
 
 Engine :: Engine() {
-	ledController.shutdown(0, false);
+	for (int i = 0; i < numDisplays; i++) {
+		ledController.shutdown(i, false);
+	}
 
   	pinMode(buzzerPin, INPUT);
   	pinMode(buzzerPin, OUTPUT);
@@ -58,20 +60,33 @@ void Engine :: playSound(int frequency, int duration) {
 }
 
 void Engine :: clearScreen() {
- 	for (int i = 0; i < 8; i ++) {
-      rowsDisplay[i] = 0;
+ 	for (int x = 0; x < WIDTH; x++) {
+		for (int y = 0; y < HEIGHT; y++) {
+			rowsDisplay[x][y] = 0;
+		}
  	}
 }
 
 void Engine :: drawToDisplay() {
-	for (int row = 0; row < 8; row ++) {
-		ledController.setRow(0, row, rowsDisplay[row]);
- 	}
+	for (int h = 0; h < NUM_HORIZONTAL_DISPLAYS; h++) { // 1
+		for (int v = 0; v < NUM_VERTICAL_DISPLAYS; v++) { // 0
+			int index = (h + 1) * (v + 1) - 1; // 1
+			for (int row = 0; row < 8; row++) { // 7
+				byte rowData = 0;
+				for (int col = 0; col < 8; col++) { // 7
+					rowData |= rowsDisplay[col + h * 8][row + v * 8] << col; // 7 :: 15
+				}
+				ledController.setRow(index, 7 - row, rowData);
+			}
+		}
+	}
 }
 
 // set display brightness [0,15]
 void Engine :: setDisplayBrightness(int brightness) {
-	ledController.setIntensity(0, brightness);
+	for (int i = 0; i < numDisplays; i++) {
+		ledController.setIntensity(i, brightness);
+	}
 }
 
 void Engine :: setPixel(int x, int y) {
@@ -83,10 +98,10 @@ void Engine :: setPixelToValue(int x, int y, bool on) {
 		return;
 	}
 		if (on) {
-			rowsDisplay[x] |= 1 << y;
+			rowsDisplay[x][y] = true;
 		}
 		else {
-			rowsDisplay[x] &= ~(1 << y);
+			rowsDisplay[x][y] = false;
 		}
 }
 

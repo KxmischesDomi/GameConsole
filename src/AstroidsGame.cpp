@@ -82,7 +82,7 @@ void AstroidsGame::updateLoop(Engine& engine) {
 		float randomT = (random(randomSeconds * 10)-randomSeconds*5)/(randomSeconds * 5);
 		timeToNextEnemySpawn = spawnDelayStart + (spawnDelayEnd - spawnDelayStart) * difficultyPercent + randomT;
 
-		enemies[numEnemies].x = 16;
+		enemies[numEnemies].x = Engine::width;
 		enemies[numEnemies].y = random(0, 8);
 		numEnemies ++;
 	}

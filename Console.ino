@@ -18,7 +18,7 @@ int activeGameIndex = 0;
 void setup() {
   Serial.begin(115200);
 
-  engine.setDisplayBrightness(2);
+  engine.setDisplayBrightness(1);
 
   if (showStartupSequence) {
     startupSequence();
@@ -122,8 +122,8 @@ void startupSequence() {
   // Frame 1
   for (int y = 0; y < Engine::height; y++) {
     for (int x = 0; x < Engine::width; x++) {
-      if (!(x <= y || x-8 >= y)) {
-        engine.setPixel(x,y);
+      if (x > y && x - Engine::width + Engine::height < y) {
+        engine.setPixel(x, y);
       }
     }
   }
@@ -132,10 +132,10 @@ void startupSequence() {
   delay(320);
 
   // Frame 2
-  for (int y = 0; y < Engine::height; y ++) {
-    for (int x = 0; x < Engine::width; x ++) {
+  for (int y = 0; y < Engine::height; y++) {
+    for (int x = 0; x < Engine::width; x++) {
       if (x <= y) {
-        engine.setPixel(x,y);
+        engine.setPixel(x, y);
       }
     }
   }
@@ -144,8 +144,8 @@ void startupSequence() {
   delay(320);
 
   // Frame 3
-  for (int y = 0; y < Engine::height; y ++) {
-    for (int x = 0; x < Engine::width; x ++) {
+  for (int y = 0; y < Engine::height; y++) {
+    for (int x = 0; x < Engine::width; x++) {
         engine.setPixel(x,y);
      }
    }
@@ -154,16 +154,16 @@ void startupSequence() {
   delay(700);
 
   // Transition out
-  for (int i = 0; i < Engine::width; i ++) {
-    for (int x = 0; x < Engine::width; x ++) {
-      for (int y = 0; y < Engine::height; y ++) {
+  for (int i = 0; i < Engine::width; i++) {
+    for (int x = 0; x < Engine::width; x++) {
+      for (int y = 0; y < Engine::height; y++) {
         if ((x+(Engine::height-y) <= i || Engine::width-x+y <= i)) {
           engine.setPixelToValue(x, y, false);
         }
       }
     }
     engine.drawToDisplay();
-    delay(35);
+    delay(280 / Engine::width);
   }
   delay(30);
 }
